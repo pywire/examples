@@ -1,10 +1,10 @@
 <article>
     <h3>User Profile</h3>
     <p>Profile ID: <mark>{id}</mark></p>
-    <p>This route is handled by <code>users/[id].pywire</code>.</p>
+    <p>This route is handled by <code>users/[id].wire</code>.</p>
 </article>
 
 ---
 
-print(f"users/{id}.pywire")
+print(f"users/{id}.wire")
 print("hello world")

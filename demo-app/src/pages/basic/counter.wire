@@ -1,7 +1,7 @@
 !path {
     'counter': '/basic/counter'
 }
-!layout "__layout__.pywire"
+!layout "__layout__.wire"
 
 <slot name="title">Counter Example</slot>
 

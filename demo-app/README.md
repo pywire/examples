@@ -33,7 +33,7 @@ python -m src.main
 demo-app/
 ├── src/
 │   ├── pages/
-│   │   └── index.pywire    # Main page
+│   │   └── index.wire    # Main page
 │   ├── components/          # Reusable components (future)
 │   ├── main.py              # App entry point
 │   └── pywire.config.py    # Configuration

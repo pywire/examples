@@ -1,7 +1,7 @@
-!component '../components/Badge.pywire' as Badge
-!component '../components/Card.pywire' as Card
-!component '../components/Button.pywire' as Button
-!component '../components/Alert.pywire' as Alert
+!component '../components/Badge.wire' as Badge
+!component '../components/Card.wire' as Card
+!component '../components/Button.wire' as Button
+!component '../components/Alert.wire' as Alert
 
 <style scoped>
 .container {

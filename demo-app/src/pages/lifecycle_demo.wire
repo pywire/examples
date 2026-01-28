@@ -1,5 +1,5 @@
 !path "/lifecycle_demo"
-!layout "basic/__layout__.pywire"
+!layout "basic/__layout__.wire"
 
 <div style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: system-ui;">
     <h1>Lifecycle Hooks Demo</h1>
