@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+echo "--- Checking Examples ---"
+# Check demo-app (if it has checks)
+if [ -d "demo-app" ]; then
+    echo "-> demo-app: Basic Import Check"
+    # Basic check: can we verify the dependencies are resolvable?
+    # We can try running a trivial command or check if pyproject valid
+    (cd demo-app && uv run python -c "import pywire; print('pywire accessible')")
+fi
+
+if [ -d "demo-components" ]; then
+    echo "-> demo-components: Basic Import Check"
+    (cd demo-components && uv run python -c "import pywire; print('pywire accessible')")
+fi
