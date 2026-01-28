@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyHTML Form Validation Test</title>
+    <title>PyWire Form Validation Test</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         .error { color: #d93526; font-size: 0.875rem; margin-top: 0.25rem; display: block; }
@@ -343,7 +343,7 @@ class User(BaseModel):
 # Phase 4: Advanced Models
 from enum import Enum
 from datetime import date
-from pyhtml.runtime.files import FileUpload
+from pywire.runtime.files import FileUpload
 
 class Role(str, Enum):
     ADMIN = 'admin'

@@ -2,7 +2,7 @@
     'weather': '/basic/weather',
     'weather/:id': '/basic/weather/:id'
 }
-!layout "__layout__.pyhtml"
+!layout "__layout__.pywire"
 
 <slot name="title">Weather Forecast</slot>
 

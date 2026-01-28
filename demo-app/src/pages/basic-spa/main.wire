@@ -3,7 +3,7 @@
     'counter': '/basic-spa/counter',
     'weather': '/basic-spa/weather',
 }
-!layout "layout.pyhtml"
+!layout "layout.pywire"
 
 <div $if={path['home']}>
     <slot name="title">Basic Home</slot>

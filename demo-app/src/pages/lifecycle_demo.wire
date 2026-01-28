@@ -1,9 +1,9 @@
 !path "/lifecycle_demo"
-!layout "basic/__layout__.pyhtml"
+!layout "basic/__layout__.pywire"
 
 <div style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: system-ui;">
     <h1>Lifecycle Hooks Demo</h1>
-    <p>This page demonstrates the execution order of PyHTML lifecycle hooks.</p>
+    <p>This page demonstrates the execution order of PyWire lifecycle hooks.</p>
     
     <div style="background: #f3f4f6; padding: 1rem; border-radius: 8px; font-family: monospace;">
         <h3>Execution Log:</h3>

@@ -1,5 +1,5 @@
 !props(variant: str = 'info', title: str = '')
-!component './test_inject.pyhtml' as TestInject
+!component './test_inject.pywire' as TestInject
 
 <style scoped>
 .alert {

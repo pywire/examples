@@ -3,7 +3,7 @@
 <div class="container">
     <header>
         <h1>🎮 Interactivity Playground</h1>
-        <p>Explore the power of PyHTML event handlers and Alpine-style modifiers.</p>
+        <p>Explore the power of PyWire event handlers and Alpine-style modifiers.</p>
     </header>
 
     <div class="grid">

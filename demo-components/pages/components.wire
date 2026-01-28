@@ -1,7 +1,7 @@
-!component '../components/Badge.pyhtml' as Badge
-!component '../components/Card.pyhtml' as Card
-!component '../components/Button.pyhtml' as Button
-!component '../components/Alert.pyhtml' as Alert
+!component '../components/Badge.pywire' as Badge
+!component '../components/Card.pywire' as Card
+!component '../components/Button.pywire' as Button
+!component '../components/Alert.pywire' as Alert
 
 <style scoped>
 .container {
@@ -42,7 +42,7 @@
 
 <div class="container">
     <h1>Component Library</h1>
-    <p>Showcase of available PyHTML components.</p>
+    <p>Showcase of available PyWire components.</p>
 
     <div class="section">
         <h2 class="section-title">Buttons</h2>
