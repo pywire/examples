@@ -13,14 +13,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
+          path: examples
+      
+      - name: Checkout PyWire
+        uses: actions/checkout@v4
+        with:
+          repository: pywire/pywire
+          path: pywire
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.12"
           enable-cache: true
+      
       - name: Install dependencies
-        run: uv sync --all-extras
+        working-directory: examples/demo-app
+        # We need to ensure pywire is available. 
+        # Since examples are usually run in the workspace, they rely on workspace sources.
+        # In this isolated CI, we must explicitly add the path or run sync with an override if possible.
+        # Simple fix: install pywire editable, then sync.
+        run: |
+           uv add --path ../../pywire pywire
+           uv sync
+
       - name: Run Checks
         working-directory: examples
         run: ./scripts/check
