@@ -1,6 +1,7 @@
 # PyWire Examples
 
 Example applications and snippets demonstrating PyWire features.
+<!-- bump -->
 
 ## ❤️ Support PyWire
 
