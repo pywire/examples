@@ -1,0 +1,9 @@
+[project]
+name = "pywire-examples"
+version = "0.1.0"
+description = "Examples for PyWire"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+members = ["demo-app", "demo-components", "demo-routing"]

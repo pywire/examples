@@ -29,13 +29,9 @@ jobs:
           enable-cache: true
       
       - name: Install dependencies
-        working-directory: examples/demo-app
-        # We need to ensure pywire is available. 
-        # Since examples are usually run in the workspace, they rely on workspace sources.
-        # In this isolated CI, we must explicitly add the path or run sync with an override if possible.
-        # Simple fix: install pywire editable, then sync.
+        working-directory: examples
         run: |
-           uv add --editable ../../pywire
+           uv add --editable ../pywire
            uv sync
 
       - name: Run Checks
