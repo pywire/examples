@@ -35,7 +35,7 @@ jobs:
         # In this isolated CI, we must explicitly add the path or run sync with an override if possible.
         # Simple fix: install pywire editable, then sync.
         run: |
-           uv add --path ../../pywire pywire
+           uv add --editable ../../pywire
            uv sync
 
       - name: Run Checks
