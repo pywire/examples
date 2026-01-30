@@ -1,5 +1,5 @@
 <article>
-    <h2>Welcome to PyWire</h2>
+    <h2>Welcome to pywire</h2>
     <p>This demo showcases Svelte-like file-based routing features:</p>
     <ul>
         <li><strong>Automatic Routing</strong>: Pages are derived from the file system.</li>

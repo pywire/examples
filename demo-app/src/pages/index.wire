@@ -49,5 +49,5 @@ def increment_count(amount=1):
 
 def change_name():
     """Change the name of the page"""
-    name = "PyWire" 
+    name = "pywire" 
     count += 1

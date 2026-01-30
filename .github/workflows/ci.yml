@@ -15,7 +15,7 @@ jobs:
         with:
           path: examples
       
-      - name: Checkout PyWire
+      - name: Checkout pywire
         uses: actions/checkout@v4
         with:
           repository: pywire/pywire
