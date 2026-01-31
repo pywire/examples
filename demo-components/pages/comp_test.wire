@@ -6,6 +6,9 @@
 
 !provide { 'COUNT': count }
 
+count = 0
+
+---html---
 <div>
     <h1>Component Test</h1>
     
@@ -29,6 +32,3 @@
         Card Body Content
     </Card>
 </div>
-
----
-count = 0

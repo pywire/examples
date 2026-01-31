@@ -1,5 +1,36 @@
 !path '/interactivity'
 
+import datetime
+
+my_input = ""
+logs = []
+
+def log_event(message):
+    """Add a message to the event log with a timestamp"""
+    time_str = datetime.datetime.now().strftime("%H:%M:%S")
+    # Keep last 15 logs
+    logs.insert(0, {"time": time_str, "message": message})
+    if len(logs) > 15:
+        logs.pop()
+
+def clear_logs():
+    """Clear the event logs"""
+    logs.clear()
+
+def on_input(event):
+    print(my_input)
+    log_event(f"Input: {event.value}")
+
+def on_select(event):
+    log_event(f"Selected: {event.value}")
+
+def on_input_debounce(event):
+    log_event(f"Debounced: {event.value}")
+
+def on_input_debounce_long(event):
+    log_event(f"Debounced 500ms: {event.value}")
+
+---html---
 <div class="container">
     <header>
         <h1>🎮 Interactivity Playground</h1>
@@ -419,34 +450,3 @@
         font-style: italic;
     }
 </style>
-
----
-import datetime
-
-my_input = ""
-logs = []
-
-def log_event(message):
-    """Add a message to the event log with a timestamp"""
-    time_str = datetime.datetime.now().strftime("%H:%M:%S")
-    # Keep last 15 logs
-    logs.insert(0, {"time": time_str, "message": message})
-    if len(logs) > 15:
-        logs.pop()
-
-def clear_logs():
-    """Clear the event logs"""
-    logs.clear()
-
-def on_input(event):
-    print(my_input)
-    log_event(f"Input: {event.value}")
-
-def on_select(event):
-    log_event(f"Selected: {event.value}")
-
-def on_input_debounce(event):
-    log_event(f"Debounced: {event.value}")
-
-def on_input_debounce_long(event):
-    log_event(f"Debounced 500ms: {event.value}")

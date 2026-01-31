@@ -1,3 +1,17 @@
+!path {
+    'counter': '/counter',
+    'users': '/users'
+}
+
+import datetime
+
+count = wire(0)
+
+def increment():
+    """Increment the counter"""
+    $count += 1
+
+---html---
 <article>
     <h2>Counter</h2>
     <p>A simple counter component.</p>
@@ -5,10 +19,3 @@
     <p>Count: {count.value}</p>
     <p>Count: {$count}</p>
 </article>
-
----
-count = wire(0)
-
-def increment():
-    """Increment the counter"""
-    $count += 1

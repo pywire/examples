@@ -3,6 +3,9 @@
 !component '../components/Button.wire' as Button
 !component '../components/Alert.wire' as Alert
 
+test_var = "helllo"
+
+---html---
 <style scoped>
 .container {
     max-width: 800px;
@@ -92,6 +95,3 @@
         </div>
     </div>
 </div>
-
----
-test_var = "helllo"

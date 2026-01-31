@@ -5,6 +5,52 @@
 }
 !layout "layout.wire"
 
+count = 0
+import datetime
+import random
+import asyncio
+
+forecasts = []
+is_loading = False
+
+async def on_load():
+
+    # Auto-fetch on initial load
+    if path['weather']:
+        print("on_load weather")
+        await refresh_data()
+    else:
+        print("on_load not weather")
+
+def increment_count():
+    """Increment the counter"""
+
+    count += 1
+
+async def refresh_data():
+
+    
+    # Simulate API delay
+    await asyncio.sleep(1.0)
+    
+    start_date = datetime.date.today()
+    summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"]
+    
+    new_forecasts = []
+    for i in range(5):
+        date = start_date + datetime.timedelta(days=i)
+        temp_c = random.randint(-20, 55)
+        new_forecasts.append({
+            'date': date.strftime("%Y-%m-%d"),
+            'temperatureC': temp_c,
+            'temperatureF': 32 + int(temp_c / 0.5556),
+            'summary': random.choice(summaries)
+        })
+    
+    forecasts = new_forecasts
+
+---html---
+
 <div $if={path['home']}>
     <slot name="title">Basic Home</slot>
 
@@ -53,48 +99,3 @@
         </table>
     </figure>
 </div>
-
----
-count = 0
-import datetime
-import random
-import asyncio
-
-forecasts = []
-is_loading = False
-
-async def on_load():
-
-    # Auto-fetch on initial load
-    if path['weather']:
-        print("on_load weather")
-        await refresh_data()
-    else:
-        print("on_load not weather")
-
-def increment_count():
-    """Increment the counter"""
-
-    count += 1
-
-async def refresh_data():
-
-    
-    # Simulate API delay
-    await asyncio.sleep(1.0)
-    
-    start_date = datetime.date.today()
-    summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"]
-    
-    new_forecasts = []
-    for i in range(5):
-        date = start_date + datetime.timedelta(days=i)
-        temp_c = random.randint(-20, 55)
-        new_forecasts.append({
-            'date': date.strftime("%Y-%m-%d"),
-            'temperatureC': temp_c,
-            'temperatureF': 32 + int(temp_c / 0.5556),
-            'summary': random.choice(summaries)
-        })
-    
-    forecasts = new_forecasts

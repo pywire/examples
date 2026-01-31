@@ -5,6 +5,20 @@
     'float': '/c/{val:float}'
 }
 
+name = "World"
+count = 1
+
+def increment_count(amount=1):
+    """Increment the counter"""
+    count += amount
+
+
+def change_name():
+    """Change the name of the page"""
+    name = "pywire" 
+    count += 1
+
+---html---
 <div>
     <h1>{"True" if path["main"] else "False"}</h1>
     <h1>Greetings, {name}!</h1>
@@ -37,17 +51,3 @@
     <br>
     <a href="/interactivity" style="display: inline-block; margin-top: 10px; padding: 10px 15px; background: #6366f1; color: white; border-radius: 8px; text-decoration: none; font-weight: bold;">Try Interactivity 0.1 ✨</a>
 </div>
-
----
-name = "World"
-count = 1
-
-def increment_count(amount=1):
-    """Increment the counter"""
-    count += amount
-
-
-def change_name():
-    """Change the name of the page"""
-    name = "pywire" 
-    count += 1

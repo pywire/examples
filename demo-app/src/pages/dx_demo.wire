@@ -1,5 +1,17 @@
 !path "/dx_demo"
 
+log_count = 0
+
+def trigger_log():
+    """Send a log message to the server console, which is streamed to the client."""
+    print(f"Hello from Server! Count: {log_count + 1}")
+    log_count += 1
+
+def trigger_error():
+    """Trigger a server-side exception."""
+    result = 1 / 0
+
+---html---
 <div>
     <h1>Developer Experience Demo</h1>
     <p>This page demonstrates the new debugging and error handling features.</p>
@@ -29,14 +41,3 @@
 
     <a href="/">Back to Home</a>
 </div>
----
-log_count = 0
-
-def trigger_log():
-    """Send a log message to the server console, which is streamed to the client."""
-    print(f"Hello from Server! Count: {log_count + 1}")
-    log_count += 1
-
-def trigger_error():
-    """Trigger a server-side exception."""
-    result = 1 / 0
