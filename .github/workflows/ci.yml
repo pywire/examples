@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: examples
       
       - name: Checkout pywire
         uses: actions/checkout@v4
@@ -29,11 +27,7 @@ jobs:
           enable-cache: true
       
       - name: Install dependencies
-        working-directory: examples
-        run: |
-           uv add --editable ../pywire
-           uv sync
+        run: uv sync
 
       - name: Run Checks
-        working-directory: examples
         run: ./scripts/check
