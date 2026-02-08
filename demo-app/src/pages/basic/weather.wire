@@ -8,8 +8,8 @@ import datetime
 import random
 import asyncio
 
-forecasts = []
-is_loading = False
+forecasts = wire([])
+is_loading = wire(False)
 
 async def on_load():
     # Auto-fetch on initial load
@@ -35,7 +35,7 @@ async def refresh_data():
             'summary': random.choice(summaries)
         })
     
-    forecasts = new_forecasts
+    $forecasts = new_forecasts
 
 ---html---
 <slot name="title">Weather Forecast</slot>

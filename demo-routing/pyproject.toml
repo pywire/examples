@@ -1,7 +1,7 @@
 [project]
 name = "demo-routing"
 authors = [
-    { name="Reece Holmdahl", email="reecelikesramen@duck.com" },
+    { name="Reece Holmdahl", email="reece@pywire.dev" },
 ]
 version = "0.1.0"
 requires-python = ">=3.11"
@@ -11,5 +11,3 @@ dependencies = [
 
 # This is not a distributable package, just for dependency management
 
-[tool.uv.sources]
-pywire = { path = "../../pywire" }

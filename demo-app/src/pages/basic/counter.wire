@@ -3,14 +3,15 @@
 }
 !layout "__layout__.wire"
 
-count = 0
+count = wire(0)
 
 def increment_count():
     """Increment the counter"""
 
-    count += 1
+    $count += 1
 
----html---
+--- html ---
+
 <slot name="title">Counter Example</slot>
 
 <h1>Counter</h1>

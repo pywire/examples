@@ -2,6 +2,11 @@ print(f"users/{uid}.wire")
 print("hello world")
 
 ---html---
+<head>
+    <meta name="Test: users/[uid].wire">
+</head>
+
+
 <article>
     <h3>User Profile</h3>
     <p>Profile ID: <mark>{uid}</mark></p>

@@ -1,3 +1,7 @@
+<head>
+    <meta name="Test: users/__layout__.wire">
+</head>
+
 <section>
     <hgroup>
         <h2>User Management</h2>

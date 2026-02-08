@@ -5,35 +5,34 @@ from pydantic import BaseModel
 from typing import Optional
 
 # State
-success_message = ""
-form_data = {}
-delivery_method = "standard"
-has_referral = False
-pydantic_success = ""
-pydantic_data = None
-advanced_success = ""
-advanced_data = None
-upload_progress = 0.0
+success_message = wire("")
+form_data = wire({})
+delivery_method = wire("standard")
+has_referral = wire(False)
+pydantic_success = wire("")
+pydantic_data = wire(None)
+advanced_success = wire("")
+advanced_data = wire(None)
+upload_progress = wire(0.0)
 # Async Task State
-task_progress = 0
-task_status_text = "Idle"
-task_running = False
+task_progress = wire(0)
+task_status_text = wire("Idle")
+task_running = wire(False)
 
 def update_has_referral(event_data):
-    self.has_referral = bool(event_data.checked)
+    $has_referral = bool(event_data["checked"])
 
 def update_delivery_method(event_data):
-    self.delivery_method = event_data.value
+    $delivery_method = event_data["value"]
 
 errors = {}  # BasePage has self.errors, but we can explicitly define for local ref if needed?
-errors = {}  # BasePage has self.errors, but we can explicitly define for local ref if needed? 
-# Actually BasePage.errors is auto-populated.
+# actually BasePage.errors is auto-populated.
 # The template uses `errors.get('key')`, which accesses self.errors.
 
 async def handle_submit(data):
     # This handler is only called if validation passes!
-    self.success_message = f"Form submitted successfully! Validated data: {json.dumps(data)}"
-    self.form_data = data
+    $success_message = f"Form submitted successfully! Validated data: {json.dumps(data)}"
+    $form_data = data
     # self.errors is automatically cleared by the wrapper before calling this if valid? 
     # Current implementation of wrapper:
     # self.errors = form_validator.validate...
@@ -46,24 +45,26 @@ async def handle_submit(data):
     # The form will hide because of $if={not success_message}
 
 async def reset_form():
-    self.success_message = ""
-    self.form_data = {}
-    self.has_referral = False
-    self.errors = {}
-    self.pydantic_success = ""
-    self.pydantic_data = None
-    self.advanced_success = ""
-    self.advanced_data = None
+    $success_message = ""
+    $form_data = {}
+    $has_referral = False
+    # self.errors = {} # errors is on the instance, not a wire variable here?
+    # If errors is implicit, we might not be able to reset it easily via wire syntax unless usage changes. 
+    # But usually re-rendering clears it or new submission.
+    $pydantic_success = ""
+    $pydantic_data = None
+    $advanced_success = ""
+    $advanced_data = None
 
 import asyncio
 
 async def run_long_task(event_data):
-    if self.task_running:
+    if task_running:
         return
 
-    self.task_running = True
-    self.task_progress = 0
-    self.task_status_text = "Initializing task..."
+    $task_running = True
+    $task_progress = 0
+    $task_status_text = "Initializing task..."
     await self.push_state()
     
     # Simulate processing steps
@@ -73,16 +74,16 @@ async def run_long_task(event_data):
         await asyncio.sleep(0.05)
         
         # Update progress
-        self.task_progress = (i / total_steps) * 100
-        self.task_status_text = f"Processing item {i} of {total_steps}..."
+        $task_progress = (i / total_steps) * 100
+        $task_status_text = f"Processing item {i} of {total_steps}..."
         
         # Push updates to UI periodically (every 5 steps or so to avoid flooding)
         if i % 2 == 0:
             await self.push_state()
             
-    self.task_status_text = "Task Completed Successfully!"
-    self.task_progress = 100
-    self.task_running = False
+    $task_status_text = "Task Completed Successfully!"
+    $task_progress = 100
+    $task_running = False
     # Final state update happens automatically on return, but explicit doesn't hurt
 
 
@@ -115,37 +116,47 @@ class AdvancedUser(BaseModel):
 
 async def handle_advanced(user: AdvancedUser):
     import base64
-    self.advanced_success = f"Advanced Valid! Name: {user.full_name}, Role: {user.role}, File: {user.profile_pic.filename if user.profile_pic else 'None'}"
+    $advanced_success = f"Advanced Valid! Name: {user.full_name}, Role: {user.role}, File: {user.profile_pic.filename if user.profile_pic else 'None'}"
     print(user)
     
     if user.profile_pic:
         b64_data = base64.b64encode(user.profile_pic.content).decode('utf-8')
         mime_type = user.profile_pic.content_type
-        self.image_preview = f"data:{mime_type};base64,{b64_data}"
+        $image_preview = f"data:{mime_type};base64,{b64_data}"
     else:
-        self.image_preview = None
+        $image_preview = None
 
-    self.advanced_data = str(user)
+    $advanced_data = str(user)
     
     
 async def handle_pydantic_submit(user: User):
     # This handler receives a Pydantic model instance!
-    self.pydantic_success = f"Pydantic Form Valid! User: {user.username}, Age: {user.age}, Active: {user.is_active}"
-    self.pydantic_data = user.dict()
+    $pydantic_success = f"Pydantic Form Valid! User: {user.username}, Age: {user.age}, Active: {user.is_active}"
+    $pydantic_data = user.dict()
     # errors are cleared automatically
 
 from datetime import date, timedelta
-tomorrow = (date.today() + timedelta(days=1)).isoformat()
-shipment_success = ""
-shipment_data = None
-delivery_method = 'standard'
-image_preview = None
+tomorrow = wire((date.today() + timedelta(days=1)).isoformat())
+shipment_success = wire("")
+shipment_data = wire(None)
+# delivery_method was already defined effectively shadowed? No, python scoping.
+# But delivery_method is defined at top level. Redefining it here?
+# Ah, the previous one was top level. This one seems to be redefining/shadowing or just initializing again?
+# The example has duplicate variable names. Let's fix this.
+# top level: delivery_method = "standard"
+# here: delivery_method = 'standard'
+# It seems the file has a bit of a mess.
+# I'll stick to the top definition and remove this one if it's redundant.
+# unique vars: shipment_success, shipment_data, image_preview.
+
+# image_preview was not defined at top.
+image_preview = wire(None)
 
 async def create_shipment(data):
-    self.shipment_success = f"Shipment Created! Method: {data.get('delivery_method')}, Address: {data.get('street')}, Date: {data.get('delivery_date')}"
-    self.shipment_data = data
+    $shipment_success = f"Shipment Created! Method: {data.get('delivery_method')}, Address: {data.get('street')}, Date: {data.get('delivery_date')}"
+    $shipment_data = data
     # Reset for demo
-    self.delivery_method = 'standard'
+    $delivery_method = 'standard'
 
 ---html---
 <!DOCTYPE html>
