@@ -1,5 +1,6 @@
 !path '/new-attributes'
 
+---
 import random
 
 # State
@@ -62,8 +63,8 @@ def reset_form():
     user_input = "Reset Value"
     selected_option = "A"
     is_checked = False
+---
 
----html---
 <div style="font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
     <h1>Attribute Tests</h1>
     

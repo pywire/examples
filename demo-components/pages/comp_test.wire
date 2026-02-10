@@ -1,14 +1,13 @@
-!component '../components/Badge.wire' as Badge
-!component '../components/Card.wire' as Card
-!component '../components/Button.wire' as Button
-!component '../components/Alert.wire' as Alert
-!component '../components/test_inject.wire' as TestInject
-
-!provide { 'COUNT': count }
+---
+from components.Badge import Badge
+from components.Card import Card
+from components.Button import Button
+from components.Alert import Alert
+from components.test_inject import TestInject
 
 count = 0
+---
 
----html---
 <div>
     <h1>Component Test</h1>
     

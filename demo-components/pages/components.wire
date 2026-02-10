@@ -1,11 +1,12 @@
-!component '../components/Badge.wire' as Badge
-!component '../components/Card.wire' as Card
-!component '../components/Button.wire' as Button
-!component '../components/Alert.wire' as Alert
+---
+from components.Badge import Badge
+from components.Card import Card
+from components.Button import Button
+from components.Alert import Alert
 
 test_var = "helllo"
+---
 
----html---
 <style scoped>
 .container {
     max-width: 800px;

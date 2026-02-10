@@ -1,4 +1,6 @@
 !path "/tests/blocks/await"
+
+---
 import asyncio
 
 # Python Logic
@@ -17,8 +19,8 @@ def trigger_reload():
     # Helper to force re-render logic if needed, 
     # though await usually runs on mount/init.
     pass
+---
 
----html---
 <div class="test-container">
     <h1>Await Block Tests</h1>
 

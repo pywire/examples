@@ -5,30 +5,31 @@
     'float': '/c/{val:float}'
 }
 
-name = "World"
-count = 1
+---
+name = wire("World")
+count = wire(1)
 
 def increment_count(amount=1):
     """Increment the counter"""
-    count += amount
+    count.value += amount
 
 
 def change_name():
     """Change the name of the page"""
-    name = "pywire" 
-    count += 1
+    name.value = "pywire" 
+    count.value += 1
+---
 
----html---
 <div>
-    <h1>{"True" if path["main"] else "False"}</h1>
+    <h1>{"True" if path.main else "False"}</h1>
     <h1>Greetings, {name}!</h1>
-    <p $show={path["main"]}>Main</p>
+    <p $show={path.main}>Main</p>
     <button @click={change_name()}>Change name</button>
     <button @click={increment_count(2)}>Click me</button>
-    <h1>{"Main" if path["main"] else "Path Params Test"}</h1>
+    <h1>{"Main" if path.main else "Path Params Test"}</h1>
     <p>{f"Test: {count}"}</p>
-    <p>{f"Any: {params['id']}" if path["any"] else f"Number: {params['num']}" if path["int"] else f"Float: {params['val']}" if path["float"] else "No path params"}</p>
-    <p>{"Test" if count > 10 else "Best"}</p>
+    <p>{f"Any: {params.id}" if path.any else f"Number: {params.num}" if path.int else f"Float: {params.val}" if path.float else "No path params"}</p>
+    <p>{"Test" if count.value > 10 else "Best"}</p>
     <p>Clicked {count} times</p>
     <p>Path: {path}</p>
     <p>URL: {url}</p>

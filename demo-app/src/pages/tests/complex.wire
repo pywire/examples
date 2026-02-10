@@ -1,5 +1,6 @@
 !path "/tests/blocks/complex"
 
+---
 # Python Logic
 categories = wire([
     {
@@ -23,8 +24,8 @@ async def fetch_meta(cat_id):
     await asyncio.sleep(2.0)
     if cat_id == "c1": return {"tags": ["tech", "gadget"]}
     raise ValueError("Meta not found")
+---
 
----html---
 <div class="test-container">
     <h1>Complex Nesting Tests</h1>
 

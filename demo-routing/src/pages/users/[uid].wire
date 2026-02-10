@@ -1,7 +1,8 @@
+---
 print(f"users/{uid}.wire")
 print("hello world")
+---
 
----html---
 <head>
     <meta name="Test: users/[uid].wire">
 </head>

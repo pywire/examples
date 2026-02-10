@@ -1,4 +1,12 @@
-!props(label: str = '', variant: str = 'primary', type: str = 'button')
+---
+from pywire import props
+
+@props
+class Props:
+    label: str = ''
+    variant: str = 'primary'
+    type: str = 'button'
+---
 
 <style scoped>
 .btn {

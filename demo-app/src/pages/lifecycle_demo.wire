@@ -1,6 +1,7 @@
 !path "/lifecycle_demo"
 !layout "basic/__layout__.wire"
 
+---
 import time
 from dataclasses import dataclass
 
@@ -29,8 +30,8 @@ def initialize_data(self):
 def another_hook(self):
     print("--- [Lifecycle] @mount another_hook ---")
     self.logs.append(LogEntry("@mount (2)", "Second mount hook called."))
+---
 
----html---
 <div style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: system-ui;">
     <h1>Lifecycle Hooks Demo</h1>
     <p>This page demonstrates the execution order of PyWire lifecycle hooks.</p>

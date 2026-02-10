@@ -1,5 +1,6 @@
 !path '/interactivity'
 
+---
 import datetime
 
 my_input = ""
@@ -29,8 +30,8 @@ def on_input_debounce(event):
 
 def on_input_debounce_long(event):
     log_event(f"Debounced 500ms: {event.value}")
+---
 
----html---
 <div class="container">
     <header>
         <h1>🎮 Interactivity Playground</h1>

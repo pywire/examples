@@ -1,5 +1,6 @@
 !path "/tests/blocks/if"
 
+---
 # Python Logic
 is_admin = wire(True)
 status = wire("active")
@@ -7,15 +8,15 @@ items = wire([1, 2, 3])
 count = wire(0)
 
 def toggle_admin():
-    $is_admin = not $is_admin
+    is_admin.value = not is_admin.value
 
 def set_status(new_status):
-    $status = new_status
+    status.value = new_status
 
 def clear_items():
-    $items = []
+    items.value = []
+---
 
----html---
 <div class="test-container">
     <h1>If Block Tests</h1>
 

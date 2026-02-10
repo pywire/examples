@@ -1,5 +1,6 @@
 !path "/dx_demo"
 
+---
 log_count = 0
 
 def trigger_log():
@@ -10,8 +11,8 @@ def trigger_log():
 def trigger_error():
     """Trigger a server-side exception."""
     result = 1 / 0
+---
 
----html---
 <div>
     <h1>Developer Experience Demo</h1>
     <p>This page demonstrates the new debugging and error handling features.</p>

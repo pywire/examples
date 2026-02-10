@@ -1,6 +1,11 @@
-!props(variant: str = 'info', title: str = '')
-!component './test_inject.wire' as TestInject
+---
+from pywire import props
 
+@props
+class Props:
+    variant: str = 'info'
+    title: str = ''
+---
 <style scoped>
 .alert {
     padding: 12px 16px;
@@ -45,5 +50,4 @@
 <div class="alert alert-{variant}">
     <div $if={title} class="alert-title">{title}</div>
     <slot></slot>
-    <TestInject></TestInject>
 </div>

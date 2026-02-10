@@ -1,3 +1,4 @@
+---
 match error_code:
     case 404:
         title = "Page Not Found"
@@ -11,9 +12,7 @@ match error_code:
         title = f"Error {error_code}"
         message = "An unknown error occurred."
         color = "#ef4444" # red
-
----html---
-
+---
 <div style="text-align: center; margin-top: 50px; font-family: system-ui, sans-serif;">
     <h1 style="font-size: 3rem; color: {color};">{error_code}</h1>
     <h2>{title}</h2>

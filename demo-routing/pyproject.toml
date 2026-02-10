@@ -11,3 +11,5 @@ dependencies = [
 
 # This is not a distributable package, just for dependency management
 
+[tool.uv.sources]
+pywire = { path = "../../pywire", editable = true }

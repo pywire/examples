@@ -1,10 +1,11 @@
 !path {
     'home': '/basic-spa',
     'counter': '/basic-spa/counter',
-    'weather': '/basic-spa/weather',
+    'weather': '/basic-spa/weather'
 }
 !layout "layout.wire"
 
+---
 count = 0
 import datetime
 import random
@@ -16,7 +17,7 @@ is_loading = False
 async def on_load():
 
     # Auto-fetch on initial load
-    if path['weather']:
+    if path.weather:
         print("on_load weather")
         await refresh_data()
     else:
@@ -48,17 +49,17 @@ async def refresh_data():
         })
     
     forecasts = new_forecasts
+---
 
----html---
 
-<div $if={path['home']}>
+<div $if={path.home}>
     <slot name="title">Basic Home</slot>
 
     <h1>Hello, world!</h1>
     <p>Welcome to your new app.</p>
 </div>
 
-<div $if={path['counter']}>
+<div $if={path.counter}>
     <slot name="title">Counter Example</slot>
 
     <h1>Counter</h1>
@@ -66,7 +67,7 @@ async def refresh_data():
     <button @click={increment_count()}>Click me</button>
 </div>
 
-<div $if={path['weather']}>
+<div $if={path.weather}>
     <slot name="title">Weather Forecast</slot>
 
     <h1>Weather</h1>

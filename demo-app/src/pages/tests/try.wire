@@ -1,5 +1,6 @@
 !path "/tests/blocks/try"
 
+---
 # Python Logic
 def safe_render():
     return "Safe Content"
@@ -16,8 +17,8 @@ def render_markdown(text):
     if "<script>" in text:
         raise ValueError("Unsafe content detected")
     return f"<b>{text}</b>"
+---
 
----html---
 <div class="test-container">
     <h1>Try/Except Block Tests</h1>
 

@@ -1,4 +1,11 @@
-!props(label: str, type: str = 'primary')
+---
+from pywire import props
+
+@props
+class Props:
+    label: str
+    type: str = 'primary'
+---
 
 <style scoped>
 .badge {

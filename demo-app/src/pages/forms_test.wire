@@ -1,5 +1,6 @@
 !path "/forms_test"
 
+---
 import json
 from pydantic import BaseModel
 from typing import Optional
@@ -20,10 +21,10 @@ task_status_text = wire("Idle")
 task_running = wire(False)
 
 def update_has_referral(event_data):
-    $has_referral = bool(event_data["checked"])
+    has_referral.value = bool(event_data["checked"])
 
 def update_delivery_method(event_data):
-    $delivery_method = event_data["value"]
+    delivery_method.value = event_data["value"]
 
 errors = {}  # BasePage has self.errors, but we can explicitly define for local ref if needed?
 # actually BasePage.errors is auto-populated.
@@ -31,8 +32,8 @@ errors = {}  # BasePage has self.errors, but we can explicitly define for local 
 
 async def handle_submit(data):
     # This handler is only called if validation passes!
-    $success_message = f"Form submitted successfully! Validated data: {json.dumps(data)}"
-    $form_data = data
+    success_message.value = f"Form submitted successfully! Validated data: {json.dumps(data)}"
+    form_data.value = data
     # self.errors is automatically cleared by the wrapper before calling this if valid? 
     # Current implementation of wrapper:
     # self.errors = form_validator.validate...
@@ -45,16 +46,16 @@ async def handle_submit(data):
     # The form will hide because of $if={not success_message}
 
 async def reset_form():
-    $success_message = ""
-    $form_data = {}
-    $has_referral = False
+    success_message.value = ""
+    form_data.value = {}
+    has_referral.value = False
     # self.errors = {} # errors is on the instance, not a wire variable here?
     # If errors is implicit, we might not be able to reset it easily via wire syntax unless usage changes. 
     # But usually re-rendering clears it or new submission.
-    $pydantic_success = ""
-    $pydantic_data = None
-    $advanced_success = ""
-    $advanced_data = None
+    pydantic_success.value = ""
+    pydantic_data.value = None
+    advanced_success.value = ""
+    advanced_data.value = None
 
 import asyncio
 
@@ -62,9 +63,9 @@ async def run_long_task(event_data):
     if task_running:
         return
 
-    $task_running = True
-    $task_progress = 0
-    $task_status_text = "Initializing task..."
+    task_running.value = True
+    task_progress.value = 0
+    task_status_text.value = "Initializing task..."
     await self.push_state()
     
     # Simulate processing steps
@@ -74,16 +75,16 @@ async def run_long_task(event_data):
         await asyncio.sleep(0.05)
         
         # Update progress
-        $task_progress = (i / total_steps) * 100
-        $task_status_text = f"Processing item {i} of {total_steps}..."
+        task_progress.value = (i / total_steps) * 100
+        task_status_text.value = f"Processing item {i} of {total_steps}..."
         
         # Push updates to UI periodically (every 5 steps or so to avoid flooding)
         if i % 2 == 0:
             await self.push_state()
             
-    $task_status_text = "Task Completed Successfully!"
-    $task_progress = 100
-    $task_running = False
+    task_status_text.value = "Task Completed Successfully!"
+    task_progress.value = 100
+    task_running.value = False
     # Final state update happens automatically on return, but explicit doesn't hurt
 
 
@@ -116,23 +117,23 @@ class AdvancedUser(BaseModel):
 
 async def handle_advanced(user: AdvancedUser):
     import base64
-    $advanced_success = f"Advanced Valid! Name: {user.full_name}, Role: {user.role}, File: {user.profile_pic.filename if user.profile_pic else 'None'}"
+    advanced_success.value = f"Advanced Valid! Name: {user.full_name}, Role: {user.role}, File: {user.profile_pic.filename if user.profile_pic else 'None'}"
     print(user)
     
     if user.profile_pic:
         b64_data = base64.b64encode(user.profile_pic.content).decode('utf-8')
         mime_type = user.profile_pic.content_type
-        $image_preview = f"data:{mime_type};base64,{b64_data}"
+        image_preview.value = f"data:{mime_type};base64,{b64_data}"
     else:
-        $image_preview = None
+        image_preview.value = None
 
-    $advanced_data = str(user)
+    advanced_data.value = str(user)
     
     
 async def handle_pydantic_submit(user: User):
     # This handler receives a Pydantic model instance!
-    $pydantic_success = f"Pydantic Form Valid! User: {user.username}, Age: {user.age}, Active: {user.is_active}"
-    $pydantic_data = user.dict()
+    pydantic_success.value = f"Pydantic Form Valid! User: {user.username}, Age: {user.age}, Active: {user.is_active}"
+    pydantic_data.value = user.dict()
     # errors are cleared automatically
 
 from datetime import date, timedelta
@@ -153,12 +154,12 @@ shipment_data = wire(None)
 image_preview = wire(None)
 
 async def create_shipment(data):
-    $shipment_success = f"Shipment Created! Method: {data.get('delivery_method')}, Address: {data.get('street')}, Date: {data.get('delivery_date')}"
-    $shipment_data = data
+    shipment_success.value = f"Shipment Created! Method: {data.get('delivery_method')}, Address: {data.get('street')}, Date: {data.get('delivery_date')}"
+    shipment_data.value = data
     # Reset for demo
-    $delivery_method = 'standard'
+    delivery_method.value = 'standard'
+---
 
----html---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -190,7 +191,7 @@ async def create_shipment(data):
                 <input type="text" 
                        id="username" 
                        name="username" 
-                       value={form_data.get('username', '')}
+                       value={form_data.value.get('username', '')}
                        required
                        minlength="3" 
                        pattern="[A-Za-z]+"
@@ -204,7 +205,7 @@ async def create_shipment(data):
                 <input type="email" 
                        id="email" 
                        name="email" 
-                       value={form_data.get('email', '')}
+                       value={form_data.value.get('email', '')}
                        required
                        aria-invalid={True if errors.get('email') else False}>
                 <small class="error" $if={errors.get('email')}>{errors.get('email')}</small>
@@ -216,7 +217,7 @@ async def create_shipment(data):
                 <input type="number" 
                        id="age" 
                        name="age" 
-                       value={form_data.get('age', '')}
+                       value={form_data.value.get('age', '')}
                        min="18" 
                        max="100"
                        aria-invalid={True if errors.get('age') else False}>
@@ -237,7 +238,7 @@ async def create_shipment(data):
                 <input type="text" 
                        id="referral_code" 
                        name="referral_code"
-                       value={form_data.get('referral_code', '')} 
+                       value={form_data.value.get('referral_code', '')} 
                        required={has_referral}
                        aria-invalid={True if errors.get('referral_code') else False}>
                 <small class="error" $if={errors.get('referral_code')}>{errors.get('referral_code')}</small>
@@ -249,7 +250,7 @@ async def create_shipment(data):
         <details>
             <summary>Debug State</summary>
             <pre>Errors: {json.dumps(errors, indent=2)}</pre>
-            <pre>Data: {json.dumps(form_data, indent=2)}</pre>
+            <pre>Data: {json.dumps(form_data.value, indent=2)}</pre>
             <pre>Has Referral: {has_referral}</pre>
         </details>
         
@@ -339,7 +340,7 @@ async def create_shipment(data):
             <label>
                 Large File Upload with Progress
                 <input type="file" name="profile_pic" accept="image/*" max-size="5MB">
-                <progress value={upload_progress} max="1" style="width: 100%; display: block; margin-top: 5px;" $if={upload_progress > 0 and upload_progress < 1}></progress>
+                <progress value={upload_progress} max="1" style="width: 100%; display: block; margin-top: 5px;" $if={upload_progress.value > 0 and upload_progress.value < 1}></progress>
                 <small class="error" $if={errors.get('profile_pic')}>{errors.get('profile_pic')}</small>
             </label>
             
@@ -372,17 +373,17 @@ async def create_shipment(data):
                 <legend>Delivery Address</legend>
                 
                 <label>Street
-                <input name="street" placeholder="Street Address" value={form_data.get('street', '')} required={delivery_method != 'pickup'}>
+                <input name="street" placeholder="Street Address" value={form_data.value.get('street', '')} required={delivery_method != 'pickup'}>
                 <small class="error" $if={errors.get('street')}>{errors.get('street')}</small>
                 </label>
                 
                 <label>City
-                <input name="city" placeholder="City" value={form_data.get('city', '')} required={delivery_method != 'pickup'}>
+                <input name="city" placeholder="City" value={form_data.value.get('city', '')} required={delivery_method != 'pickup'}>
                 <small class="error" $if={errors.get('city')}>{errors.get('city')}</small>
                 </label>
                 
                 <label>ZIP Code (5 digits)
-                <input name="zip" pattern="[0-9]{{5}}" title="Must be exactly 5 digits" placeholder="ZIP Code" value={form_data.get('zip', '')} required={delivery_method != 'pickup'}>
+                <input name="zip" pattern="[0-9]{{5}}" title="Must be exactly 5 digits" placeholder="ZIP Code" value={form_data.value.get('zip', '')} required={delivery_method != 'pickup'}>
                 <small class="error" $if={errors.get('zip')}>{errors.get('zip')}</small>
                 </label>
             </fieldset>

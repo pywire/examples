@@ -1,8 +1,10 @@
 !path {
     'weather': '/basic/weather',
-    'weather/:id': '/basic/weather/:id'
+    'id': '/basic/weather/:id'
 }
 !layout "__layout__.wire"
+
+---
 
 import datetime
 import random
@@ -35,9 +37,9 @@ async def refresh_data():
             'summary': random.choice(summaries)
         })
     
-    $forecasts = new_forecasts
+    forecasts.value = new_forecasts
+---
 
----html---
 <slot name="title">Weather Forecast</slot>
 
 <h1>Weather</h1>
@@ -49,7 +51,7 @@ async def refresh_data():
     </button>
 </div>
 
-<h1 $show={path['weather/:id']}>Weather</h1>
+<h1 $show={path.id}>Weather</h1>
 
 <figure>
     <table role="grid">

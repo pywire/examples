@@ -1,5 +1,6 @@
 !path "/test-1.7"
 
+---
 count = wire(3)
 other_count = 0
 
@@ -22,9 +23,8 @@ my_dict = wire({
     '0003': 'Tapple',
     '0004': 'Grapple'
 })
+---
 
-
----html---
 <p>Count: {count}</p>
 <button @click={increment}>Increment</button>
 <hr />
